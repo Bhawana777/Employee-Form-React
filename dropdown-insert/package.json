@@ -1,0 +1,15 @@
+{
+  "name": "dropdown-insert",
+  "version": "1.0.0",
+  "description": "dropdown data only",
+  "main": "y",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "bhawana",
+  "license": "ISC",
+  "dependencies": {
+    "country-state-city": "^3.2.1",
+    "mongodb": "^6.3.0"
+  }
+}
