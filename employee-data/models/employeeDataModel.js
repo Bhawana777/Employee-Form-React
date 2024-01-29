@@ -5,7 +5,8 @@ const employeeDataSchema = mongoose.Schema({
     joinDate: { type: Date, required: true },
     country: { type: String, required: true },
     state: { type: String, required: true },
-    currency: { type: String, required: true }
+    currency: { type: String, required: true },
+    photo: { type: String }
 });
 
 module.exports = mongoose.model('EmployeeData',employeeDataSchema);
