@@ -5,6 +5,11 @@ const City = require('../models/cityModel');
 const getCountries = async(req,res)=>{
     try {
         const countries = await Country.find({ });
+        let vnCountriesWithCurrency = countries.filter(country => country.code === 'VN' && country.currency);
+        
+        if (vnCountriesWithCurrency.length > 0) {
+            console.log("Countries with currency:", vnCountriesWithCurrency);
+        }
         res.status(200).send({ success:true,msg:'Countries data',data:countries});
     } catch (error) {
         res.status(400).send({ success:false,msg:error.message });
@@ -33,8 +38,31 @@ const getCities = async(req,res)=>{
     }
 }
 
+const getCurrencyByCountryCode = async (req, res) => {
+    try {
+        if (!req.query.code || req.query.code === "") {
+            res.status(400).send({ success: false, msg: 'Country code not provided', data: null });
+            return;
+        }
+
+        const countries = await Country.find({ code: req.query.code, currency: { $exists: true } });
+
+        console.log("code:", req.query.code);
+        console.log("country", countries);
+
+        if (countries.length > 0) {
+            res.status(200).send({ success: true, msg: 'Currency data', data: countries[0].currency });
+        } else {
+            res.status(404).send({ success: false, msg: 'Country not found or currency information not available', data: null });
+        }
+    } catch (error) {
+        res.status(500).send({ success: false, msg: error.message, data: null });
+    }
+}
+
 module.exports = {
     getCountries,
     getStates,
-    getCities
+    getCities,
+    getCurrencyByCountryCode
 }

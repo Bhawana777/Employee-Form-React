@@ -8,7 +8,11 @@ const countrySchema = mongoose.Schema({
     code:{
         type:String,
         required:true
+    },
+    currency:{
+        type:String,
+        required:true
     }
 });
-
+  
 module.exports = mongoose.model('Country',countrySchema);

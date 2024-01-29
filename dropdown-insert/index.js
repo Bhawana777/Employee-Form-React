@@ -9,8 +9,11 @@ async function populateDatabase() {
         const countriesBulk = db.collection('countries').initializeOrderedBulkOp();
         const countries = Country.getAllCountries();
         countries.forEach(country => {
-            countriesBulk.insert({ name: country.name, code: country.isoCode });
+            console.log(`Processing country: ${country.name}`);
+            console.log(`Currency: ${country.currency}`); 
+            countriesBulk.insert({ name: country.name, code: country.isoCode, currency: country.currency });
         });
+        //console.log('Countries:', countries);
         await countriesBulk.execute();
         console.log('Countries inserted');
 
@@ -19,16 +22,16 @@ async function populateDatabase() {
         states.forEach(state => {
             statesBulk.insert({ name: state.name, code: state.countryCode });
         });
-        await statesBulk.execute();
-        console.log('States inserted');
+        //await statesBulk.execute();
+        //console.log('States inserted');
 
         const citiesBulk = db.collection('cities').initializeOrderedBulkOp();
         const cities = City.getAllCities();
         cities.forEach(city => {
             citiesBulk.insert({ name: city.name, code: city.stateCode });
         });
-        await citiesBulk.execute();
-        console.log('Cities inserted');
+        //await citiesBulk.execute();
+        //console.log('Cities inserted');
 
         client.close(); // Close the database connection
     } catch (err) {
