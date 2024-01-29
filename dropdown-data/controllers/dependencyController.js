@@ -5,7 +5,7 @@ const City = require('../models/cityModel');
 const getCountries = async(req,res)=>{
     try {
         const countries = await Country.find({ });
-        let vnCountriesWithCurrency = countries.filter(country => country.code === 'VN' && country.currency);
+        let vnCountriesWithCurrency = countries.filter(country => country.code && country.currency);
         
         if (vnCountriesWithCurrency.length > 0) {
             console.log("Countries with currency:", vnCountriesWithCurrency);
